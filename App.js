@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, SafeAreaView, Text } from 'react-native';
-import { ShowApi } from './src/ShowApi.js';
+import { View, StyleSheet, SafeAreaView, Text, ScrollView} from 'react-native';
+import { ShowApi } from './src/components/ShowApi.js';
 
 export default function App() {
   return (
