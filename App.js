@@ -1,20 +1,21 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Text } from 'react-native';
 import { ShowApi } from './src/ShowApi.js';
 
 export default function App() {
   return (
     <SafeAreaView>
-        <ShowApi />
+      <Text style={styles.container}>API</Text>
+      <ShowApi />
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    backgroundColor: 'skyblue',
+    fontSize: 30,
+    textAlign: 'center',
+    marginTop: 21,
+  }
 });
