@@ -1,13 +1,18 @@
 import React from 'react';
-import { View, StyleSheet, SafeAreaView, Text, ScrollView} from 'react-native';
-import { ShowApi } from './src/components/ShowApi.js';
+import { View, StyleSheet, SafeAreaView, Text, ScrollView } from 'react-native';
+import MainPage from './src/components/MainPage';
 
 export default function App() {
   return (
-    <SafeAreaView>
-      <Text style={styles.container}>API</Text>
-      <ShowApi />
-    </SafeAreaView>
+    <View>
+      <SafeAreaView>
+        <Text style={styles.container}>API</Text>
+        <ScrollView>
+          <MainPage />
+        </ScrollView>
+      </SafeAreaView>
+
+    </View>
   )
 }
 

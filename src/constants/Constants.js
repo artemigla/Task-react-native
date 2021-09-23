@@ -1,2 +1,2 @@
 export const API = 'https://jsonplaceholder.typicode.com/todos';
-export const PAGE = 30;
+export const PAGE = 21;
