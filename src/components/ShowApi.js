@@ -6,8 +6,7 @@ export const ShowApi = ({ currentListPost, search }) => {
         if (title.toLowerCase().includes(search.toLowerCase())) {
             return title;
         }
-    }).map(({ title, id }) => <View key={id}><Text style={styles.lines}>{title}</Text></View>)
-
+    }).map(({ title, id }) => <View key={id}><Text style={styles.lines}>{id} {" "} {title}</Text></View>)
     return <View>{showListPost}</View>
 }
 

@@ -56,7 +56,7 @@ const MainPage = () => {
             <View style={styles.wrapper}>
                 <ShowApi currentListPost={currentListPost} search={search} />
             </View>
-            <Pagination page={PAGE} posts={posts.length} paginate={paginate} />
+            <Pagination page={PAGE} posts={posts.length} paginate={paginate} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
         </View>
     );
 }
