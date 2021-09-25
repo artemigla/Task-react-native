@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet, FlatList } from 'react-native';
 import { API, PAGE } from '../constants/Constants';
 import axios from 'axios';
 import { ShowApi } from './ShowApi';
@@ -11,66 +11,72 @@ const MainPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [openPosts, setOpenPosts] = useState(false);
 
-    const getApi = async () => {
-        try {
-            //Здесь добавил логическое значениедля того, пока установлен флаг "true",
-            setOpenPosts(!openPosts);
-
-            //здесь загружаются посты. После того как посты загрузились...
-            const res = await axios.get(API);
-
-            //...здесь переключится на флаг "false"
-
-            //P.S.
-            //Такую запись я прочитал на одном из форумов, но я не уверен, что обязателен этот флаг,
-            //так как посты нормально загружаются и без него.
-            setOpenPosts(false);
-            setPosts(res.data);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
     useEffect(() => {
+        const getApi = async () => {
+            try {
+                //Здесь добавил логическое значениедля того, пока установлен флаг "true",
+                setOpenPosts(!openPosts);
+
+                //здесь загружаются посты. После того как посты загрузились...
+                const res = await axios.get(API);
+
+                //...здесь переключится на флаг "false"
+
+                //P.S.
+                //Такую запись я прочитал на одном из форумов, но я не уверен, что обязателен этот флаг,
+                //так как посты нормально загружаются и без него.
+                setOpenPosts(false);
+                setPosts(res.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
         getApi();
     }, []);
 
     const lastPageIndex = currentPage * PAGE;
     const firstPageIndex = lastPageIndex - PAGE;
-
-    const currentListPost = posts.slice(firstPageIndex, lastPageIndex);
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+
     const handleChange = (event) => {
         setSearch(event);
     }
+
+    const currentListPost = posts.slice(firstPageIndex, lastPageIndex).filter(({ title }) => {
+        if (title.toLowerCase().includes(search.toLowerCase())) {
+            return title;
+        }
+    })
+
     return (
         <View>
             <TextInput
-            style={styles.fieldInput}
+                style={styles.fieldInput}
                 placeholder='Search...'
                 onChangeText={handleChange}
                 value={search}
             />
-            <View style={styles.wrapper}>
-                <ShowApi currentListPost={currentListPost} search={search} />
-            </View>
-            <Pagination page={PAGE} posts={posts.length} paginate={paginate} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+            <FlatList
+                data={currentListPost}
+                keyExtractor={item => item.id.toString()}
+                renderItem={({ item }) => (
+                    <ShowApi posts={item} />
+                )}
+            />
+            <Pagination page={PAGE} posts={posts.length} paginate={paginate} currentPage={currentPage} setCurrentPage={setCurrentPage} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    wrapper: {
-        borderWidth: 1,
-        margin: 1
-    },
     fieldInput: {
         width: '50%',
         fontSize: 17,
         margin: 0,
-        borderWidth: 1
+        borderWidth: 1,
+        marginLeft: 'auto'
     }
 })
 

@@ -1,19 +1,44 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { Text, StyleSheet, TouchableOpacity, SafeAreaView, Modal } from 'react-native';
 
-export const ShowApi = ({ currentListPost, search }) => {
-    const showListPost = currentListPost.filter(({ title }) => {
-        if (title.toLowerCase().includes(search.toLowerCase())) {
-            return title;
-        }
-    }).map(({ title, id }) => <View key={id}><Text style={styles.lines}>{id} {" "} {title}</Text></View>)
-    return <View>{showListPost}</View>
+export const ShowApi = ({ posts }) => {
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const openWindow = () => {
+        setModalVisible(!modalVisible);
+    }
+
+    return (
+        <TouchableOpacity onPress={openWindow}>
+            <Text style={styles.title}>{"[" + posts.id + "] "}{posts.title} </Text>
+            <Modal
+                animationType="slide"
+                presentationStyle="formSheet"
+                visible={modalVisible}
+            >
+                <SafeAreaView style={styles.modal}>
+                    <Text style={styles.close} onPress={openWindow}>&times;</Text>
+                    <Text>
+                        {"[" + posts.id + "]" + " "} {posts.body}
+                    </Text>
+                </SafeAreaView>
+            </Modal>
+        </TouchableOpacity>
+    )
 }
 
 const styles = StyleSheet.create({
-    lines: {
-        flex: 1,
-        paddingLeft: 3,
-        borderBottomWidth: 1,
+    title: {
+        fontSize: 17,
+        fontWeight: '500',
+        marginTop: 3,
+        borderWidth: 1
+    },
+    modal: {
+        margin: 25
+    },
+    close: {
+        fontSize: 35,
+        textAlign: 'right',
     }
 })

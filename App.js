@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, SafeAreaView, Text, ScrollView } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Text } from 'react-native';
 import MainPage from './src/components/MainPage';
 
 export default function App() {
@@ -7,11 +7,8 @@ export default function App() {
     <View>
       <SafeAreaView>
         <Text style={styles.container}>API</Text>
-        <ScrollView>
-          <MainPage />
-        </ScrollView>
+        <MainPage />
       </SafeAreaView>
-
     </View>
   )
 }
