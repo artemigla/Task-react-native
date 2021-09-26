@@ -7,7 +7,7 @@ import { Pagination } from './Pagination';
 
 const MainPage = () => {
     const [posts, setPosts] = useState([]);
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [openPosts, setOpenPosts] = useState(false);
 
@@ -30,7 +30,7 @@ const MainPage = () => {
             } catch (error) {
                 console.error(error);
             }
-        }
+        };
         getApi();
     }, []);
 
@@ -42,13 +42,13 @@ const MainPage = () => {
 
     const handleChange = (event) => {
         setSearch(event);
-    }
+    };
 
     const currentListPost = posts.slice(firstPageIndex, lastPageIndex).filter(({ title }) => {
         if (title.toLowerCase().includes(search.toLowerCase())) {
             return title;
         }
-    })
+    });
 
     return (
         <View>
@@ -68,7 +68,7 @@ const MainPage = () => {
             <Pagination page={PAGE} posts={posts.length} paginate={paginate} currentPage={currentPage} setCurrentPage={setCurrentPage} />
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     fieldInput: {
@@ -78,6 +78,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginLeft: 'auto'
     }
-})
+});
 
 export default MainPage;

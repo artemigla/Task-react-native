@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import { PAGE_NUMBER_LIMIT } from '../constants/Constants';
+import PropTypes from 'prop-types';
 
 export const Pagination = ({ page, posts, paginate, currentPage, setCurrentPage }) => {
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(3);
@@ -17,7 +18,7 @@ export const Pagination = ({ page, posts, paginate, currentPage, setCurrentPage 
       setMaxPageNumberLimit(maxPageNumberLimit + PAGE_NUMBER_LIMIT);
       setMinPageNumberLimit(minPageNumberLimit + PAGE_NUMBER_LIMIT);
     }
-  }
+  };
 
   const handlePrev = () => {
     setCurrentPage(currentPage - 1);
@@ -33,7 +34,7 @@ export const Pagination = ({ page, posts, paginate, currentPage, setCurrentPage 
         <View key={index} style={styles.buttonNumberPage}>
           <Button onPress={() => paginate(item)} title={`${item}`} />
         </View>
-      )
+      );
     }
   });
 
@@ -51,8 +52,8 @@ export const Pagination = ({ page, posts, paginate, currentPage, setCurrentPage 
           title="Next" />
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   buttonNumberPage: {
@@ -66,4 +67,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   }
-})
+});
+
+Pagination.propTypes = {
+  page: PropTypes.number.isRequired,
+  posts: PropTypes.number.isRequired,
+  paginate: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  setCurrentPage: PropTypes.func.isRequired
+};
