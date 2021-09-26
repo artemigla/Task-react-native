@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
-import { PAGE_NUMBER_LIMIT } from '../constants/Constants';
+import { PAGE_NUMBER_LIMIT } from '../constants/constants';
 import PropTypes from 'prop-types';
 
 export const Pagination = ({ page, posts, paginate, currentPage, setCurrentPage }) => {
@@ -12,7 +12,7 @@ export const Pagination = ({ page, posts, paginate, currentPage, setCurrentPage 
     numberOfPages.push(i);
   }
 
-  const handleNext = () => {
+  const handlerNext = () => {
     setCurrentPage(currentPage + 1);
     if (currentPage + 1 > maxPageNumberLimit) {
       setMaxPageNumberLimit(maxPageNumberLimit + PAGE_NUMBER_LIMIT);
@@ -20,7 +20,7 @@ export const Pagination = ({ page, posts, paginate, currentPage, setCurrentPage 
     }
   };
 
-  const handlePrev = () => {
+  const handlerPrev = () => {
     setCurrentPage(currentPage - 1);
     if ((currentPage - 1) % PAGE_NUMBER_LIMIT === 0) {
       setMaxPageNumberLimit(maxPageNumberLimit - PAGE_NUMBER_LIMIT);
@@ -28,7 +28,7 @@ export const Pagination = ({ page, posts, paginate, currentPage, setCurrentPage 
     }
   };
 
-  const handlerButton = numberOfPages.map((item, index) => {
+  const pageNumber = (item, index) => {
     if (item < maxPageNumberLimit + 1 && item > minPageNumberLimit) {
       return (
         <View key={index} style={styles.buttonNumberPage}>
@@ -36,18 +36,20 @@ export const Pagination = ({ page, posts, paginate, currentPage, setCurrentPage 
         </View>
       );
     }
-  });
+  };
+
+  const handlerButton = numberOfPages.map(pageNumber);
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.wrapper}>
-        <Button onPress={handlePrev}
+        <Button onPress={handlerPrev}
           disabled={currentPage === numberOfPages[0] ? true : false}
           title="Prev" />
       </View>
       {handlerButton}
       <View style={styles.wrapper}>
-        <Button onPress={handleNext}
+        <Button onPress={handlerNext}
           disabled={currentPage === numberOfPages[numberOfPages.length - 1] ? true : false}
           title="Next" />
       </View>
@@ -59,6 +61,7 @@ const styles = StyleSheet.create({
   buttonNumberPage: {
     marginTop: 10,
     margin: 3,
+    marginBottom: 30
   },
   wrapper: {
     marginTop: 10,
@@ -66,6 +69,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    marginBottom: 30
   }
 });
 

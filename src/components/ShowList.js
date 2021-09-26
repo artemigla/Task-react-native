@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, TouchableOpacity, SafeAreaView, Modal } from 'react-native';
 import PropTypes from 'prop-types';
-export const ShowApi = ({ posts }) => {
+
+export const ShowList = ({ posts }) => {
     const [modalVisible, setModalVisible] = useState(false);
 
     const openWindow = () => {
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontWeight: '500',
         marginTop: 3,
-        borderWidth: 1
+        borderWidth: 1,
     },
     modal: {
         margin: 25
@@ -43,6 +44,6 @@ const styles = StyleSheet.create({
     }
 });
 
-ShowApi.propTypes = {
+ShowList.propTypes = {
     posts: PropTypes.object.isRequired
 };

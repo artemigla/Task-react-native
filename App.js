@@ -6,8 +6,7 @@ export default function App() {
   return (
     <View>
       <SafeAreaView>
-        <StatusBar>
-          </StatusBar>
+        <StatusBar backgroundColor='gray' />
         <Text style={styles.container}>API</Text>
         <MainPage />
       </SafeAreaView>
@@ -20,6 +19,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'skyblue',
     fontSize: 30,
     textAlign: 'center',
-    marginTop: 21,
   }
 });

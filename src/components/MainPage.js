@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, TextInput, StyleSheet, FlatList } from 'react-native';
-import { API, PAGE } from '../constants/Constants';
-import axios from 'axios';
-import { ShowApi } from './ShowApi';
+import { PAGE } from '../constants/constants';
 import { Pagination } from './Pagination';
+import { ShowList } from './ShowList';
+import { Api } from '../api/api';
+import axios from 'axios';
 
 const MainPage = () => {
     const [posts, setPosts] = useState([]);
@@ -18,7 +19,7 @@ const MainPage = () => {
                 setOpenPosts(!openPosts);
 
                 //здесь загружаются посты. После того как посты загрузились...
-                const res = await axios.get(API);
+                const res = await axios.get(Api);
 
                 //...здесь переключится на флаг "false"
 
@@ -36,6 +37,7 @@ const MainPage = () => {
 
     const lastPageIndex = currentPage * PAGE;
     const firstPageIndex = lastPageIndex - PAGE;
+
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
@@ -62,10 +64,16 @@ const MainPage = () => {
                 data={currentListPost}
                 keyExtractor={item => item.id.toString()}
                 renderItem={({ item }) => (
-                    <ShowApi posts={item} />
+                    <ShowList posts={item} />
                 )}
             />
-            <Pagination page={PAGE} posts={posts.length} paginate={paginate} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+            <Pagination
+                page={PAGE}
+                posts={posts.length}
+                paginate={paginate}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+            />
         </View>
     );
 };
@@ -79,5 +87,4 @@ const styles = StyleSheet.create({
         marginLeft: 'auto'
     }
 });
-
 export default MainPage;
