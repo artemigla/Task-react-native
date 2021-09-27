@@ -3,6 +3,7 @@ import { View, TextInput, StyleSheet, FlatList } from 'react-native';
 import { PAGE } from '../constants/constants';
 import { Pagination } from './Pagination';
 import { ShowList } from './ShowList';
+import { Loading } from './Loading';
 import { Api } from '../api/api';
 import axios from 'axios';
 
@@ -10,24 +11,15 @@ const MainPage = () => {
     const [posts, setPosts] = useState([]);
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [openPosts, setOpenPosts] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const getApi = async () => {
             try {
-                //Здесь добавил логическое значениедля того, пока установлен флаг "true",
-                setOpenPosts(!openPosts);
-
-                //здесь загружаются посты. После того как посты загрузились...
+                setLoading(!loading);
                 const res = await axios.get(Api);
-
-                //...здесь переключится на флаг "false"
-
-                //P.S.
-                //Такую запись я прочитал на одном из форумов, но я не уверен, что обязателен этот флаг,
-                //так как посты нормально загружаются и без него.
-                setOpenPosts(false);
                 setPosts(res.data);
+                setLoading(loading);
             } catch (error) {
                 console.error(error);
             }
@@ -60,27 +52,30 @@ const MainPage = () => {
                 onChangeText={handleChange}
                 value={search}
             />
-            <FlatList
-                data={currentListPost}
-                keyExtractor={item => item.id.toString()}
-                renderItem={({ item }) => (
-                    <ShowList posts={item} />
-                )}
-            />
-            <Pagination
-                page={PAGE}
-                posts={posts.length}
-                paginate={paginate}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-            />
+            {loading ? <Loading /> :
+                <View>
+                    <FlatList
+                        data={currentListPost}
+                        keyExtractor={item => item.id.toString()}
+                        renderItem={({ item }) => (
+                            <ShowList posts={item} />
+                        )}
+                    />
+                    <Pagination
+                        page={PAGE}
+                        posts={posts.length}
+                        paginate={paginate}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                    />
+                </View>}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     fieldInput: {
-        width: '50%',
+        width: '70%',
         fontSize: 17,
         margin: 0,
         borderWidth: 1,
