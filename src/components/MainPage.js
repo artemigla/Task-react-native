@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, StyleSheet, FlatList } from 'react-native';
+import { View, TextInput, StyleSheet, FlatList, SafeAreaView } from 'react-native';
 import { PAGE } from '../constants/constants';
 import { Pagination } from './Pagination';
 import { ShowList } from './ShowList';
@@ -18,7 +18,7 @@ const MainPage = () => {
             try {
                 setLoading(!loading);
                 const res = await axios.get(Api);
-                setPosts(res.data);
+                setPosts(res.data.results);
                 setLoading(loading);
             } catch (error) {
                 console.error(error);
@@ -53,8 +53,10 @@ const MainPage = () => {
                 value={search}
             />
             {loading ? <Loading /> :
-                <View>
+                <SafeAreaView style={styles.wrapper}>
                     <FlatList
+                        numColumns={1}
+                        contentContainerStyle={{ paddingBottom: 100 }}
                         data={currentListPost}
                         keyExtractor={item => item.id.toString()}
                         renderItem={({ item }) => (
@@ -68,7 +70,7 @@ const MainPage = () => {
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
                     />
-                </View>}
+                </SafeAreaView>}
         </View>
     );
 };
@@ -80,6 +82,9 @@ const styles = StyleSheet.create({
         margin: 0,
         borderWidth: 1,
         marginLeft: 'auto'
+    },
+    wrapper: {
+        resizeMode: 'contain',
     }
 });
 export default MainPage;

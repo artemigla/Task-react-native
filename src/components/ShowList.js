@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, TouchableOpacity, SafeAreaView, Modal } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, SafeAreaView, Modal, Image, View } from 'react-native';
 import PropTypes from 'prop-types';
 
 export const ShowList = ({ posts }) => {
@@ -11,7 +11,11 @@ export const ShowList = ({ posts }) => {
 
     return (
         <TouchableOpacity onPress={openWindow}>
-            <Text style={styles.title}>{'[' + posts.id + '] '}{posts.title} </Text>
+            <View style={styles.filmItem}>
+                <Image style={styles.image} source={{ uri: `https://image.tmdb.org/t/p/w200${posts.poster_path}` }} />
+                <Text style={styles.title}>{posts.title} </Text>
+                <Text style={styles.voteAverage}> {'Vote average '}{posts.vote_average} </Text>
+            </View>
             <Modal
                 animationType="slide"
                 presentationStyle="formSheet"
@@ -19,9 +23,10 @@ export const ShowList = ({ posts }) => {
             >
                 <SafeAreaView style={styles.modal}>
                     <Text style={styles.close} onPress={openWindow}>&times;</Text>
-                    <Text>
-                        {'[' + posts.id + ']' + ' '} {posts.body}
-                    </Text>
+                    <Image style={styles.modalImage} source={{ uri: `https://image.tmdb.org/t/p/w200${posts.poster_path}` }} />
+                    <Text style={styles.title}>{posts.title} </Text>
+                    <Text> {posts.vote_average} </Text>
+                    <Text> {posts.overview}</Text>
                 </SafeAreaView>
             </Modal>
         </TouchableOpacity>
@@ -31,9 +36,12 @@ export const ShowList = ({ posts }) => {
 const styles = StyleSheet.create({
     title: {
         fontSize: 17,
-        fontWeight: '500',
         marginTop: 3,
-        borderWidth: 1,
+        color: 'black',
+        fontWeight: 'bold',
+        alignItems: 'center',
+        textAlign: 'center',
+        justifyContent: 'center'
     },
     modal: {
         margin: 25
@@ -41,6 +49,27 @@ const styles = StyleSheet.create({
     close: {
         fontSize: 35,
         textAlign: 'right',
+    },
+    image: {
+        width: 200,
+        height: 200,
+        resizeMode: 'contain',
+    },
+    modalImage: {
+        width: 200,
+        height: 300,
+        resizeMode: 'contain',
+        marginLeft: '23%',
+        borderWidth: 1
+    },
+    filmItem: {
+        alignItems: 'center',
+        flexDirection: 'column',
+        margin: 15,
+    },
+    voteAverage: {
+        fontWeight: '100',
+        color: 'black'
     }
 });
 
