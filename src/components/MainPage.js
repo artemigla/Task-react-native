@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, StyleSheet, FlatList, SafeAreaView } from 'react-native';
+import { View, StyleSheet, FlatList, SafeAreaView } from 'react-native';
 import { PAGE } from '../constants/constants';
 import { Pagination } from './Pagination';
 import { ShowList } from './ShowList';
 import { Loading } from './Loading';
+import { Debounce } from './Debounce';
 import { Api } from '../api/api';
 import axios from 'axios';
 
@@ -33,11 +34,7 @@ const MainPage = () => {
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-
-    const handleChange = (event) => {
-        setSearch(event);
-    };
-
+    
     const currentListPost = posts.slice(firstPageIndex, lastPageIndex).filter(({ title }) => {
         if (title.toLowerCase().includes(search.toLowerCase())) {
             return title;
@@ -46,12 +43,7 @@ const MainPage = () => {
 
     return (
         <View>
-            <TextInput
-                style={styles.fieldInput}
-                placeholder='Search...'
-                onChangeText={handleChange}
-                value={search}
-            />
+            <Debounce setSearch={setSearch} />
             {loading ? <Loading /> :
                 <SafeAreaView style={styles.wrapper}>
                     <FlatList
@@ -76,13 +68,6 @@ const MainPage = () => {
 };
 
 const styles = StyleSheet.create({
-    fieldInput: {
-        width: '70%',
-        fontSize: 17,
-        margin: 0,
-        borderWidth: 1,
-        marginLeft: 'auto'
-    },
     wrapper: {
         resizeMode: 'contain',
     }
