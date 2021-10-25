@@ -1,2 +1,2 @@
-export const PAGE = 12;
-export const PAGE_NUMBER_LIMIT = 3;
+export const PAGE = 10;
+export const PAGE_NUMBER_LIMIT = 1;

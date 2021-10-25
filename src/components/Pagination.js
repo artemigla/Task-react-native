@@ -4,7 +4,7 @@ import { PAGE_NUMBER_LIMIT } from '../constants/constants';
 import PropTypes from 'prop-types';
 
 export const Pagination = ({ page, posts, paginate, currentPage, setCurrentPage }) => {
-  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(3);
+  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(1);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
   const numberOfPages = [];
 

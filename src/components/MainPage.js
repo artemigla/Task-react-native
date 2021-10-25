@@ -17,10 +17,10 @@ const MainPage = () => {
     useEffect(() => {
         const getApi = async () => {
             try {
-                setLoading(!loading);
+                setLoading(true);
                 const res = await axios.get(Api);
                 setPosts(res.data.results);
-                setLoading(loading);
+                setLoading(false);
             } catch (error) {
                 console.error(error);
             }
@@ -34,12 +34,12 @@ const MainPage = () => {
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-    
-    const currentListPost = posts.slice(firstPageIndex, lastPageIndex).filter(({ title }) => {
+
+    const currentListPost = posts.filter(({ title }) => {
         if (title.toLowerCase().includes(search.toLowerCase())) {
             return title;
         }
-    });
+    }).slice(firstPageIndex, lastPageIndex);
 
     return (
         <View>
