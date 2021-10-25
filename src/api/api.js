@@ -1,1 +1,1 @@
-export const Api = 'https://api.themoviedb.org/3/movie/now_playing?api_key=c8b12b87395ea395f7a50b6f6f398e58&language=en-US&page=1';
+export const Api = 'https://jsonplaceholder.typicode.com/posts';

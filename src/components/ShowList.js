@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, TouchableOpacity, SafeAreaView, Modal, Image, View } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, SafeAreaView, Modal, View, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 
 export const ShowList = ({ posts }) => {
@@ -11,11 +11,11 @@ export const ShowList = ({ posts }) => {
 
     return (
         <TouchableOpacity onPress={openWindow}>
-            <View style={styles.filmItem}>
-                <Image style={styles.image} source={{ uri: `https://image.tmdb.org/t/p/w200${posts.poster_path}` }} />
-                <Text style={styles.title}>{posts.title} </Text>
-                <Text style={styles.voteAverage}> {'Vote average '}{posts.vote_average} </Text>
-            </View>
+            <ScrollView>
+                <View>
+                    <Text style={styles.title}>{posts.title} </Text>
+                </View>
+            </ScrollView>
             <Modal
                 animationType="slide"
                 presentationStyle="formSheet"
@@ -23,10 +23,7 @@ export const ShowList = ({ posts }) => {
             >
                 <SafeAreaView style={styles.modal}>
                     <Text style={styles.close} onPress={openWindow}>&times;</Text>
-                    <Image style={styles.modalImage} source={{ uri: `https://image.tmdb.org/t/p/w200${posts.poster_path}` }} />
-                    <Text style={styles.title}>{posts.title} </Text>
-                    <Text> {posts.vote_average} </Text>
-                    <Text> {posts.overview}</Text>
+                    <Text style={styles.title}>{posts.body} </Text>
                 </SafeAreaView>
             </Modal>
         </TouchableOpacity>
@@ -41,7 +38,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         alignItems: 'center',
         textAlign: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderBottomWidth: 1
     },
     modal: {
         margin: 25
@@ -50,27 +48,6 @@ const styles = StyleSheet.create({
         fontSize: 35,
         textAlign: 'right',
     },
-    image: {
-        width: 200,
-        height: 200,
-        resizeMode: 'contain',
-    },
-    modalImage: {
-        width: 200,
-        height: 300,
-        resizeMode: 'contain',
-        marginLeft: '23%',
-        borderWidth: 1
-    },
-    filmItem: {
-        alignItems: 'center',
-        flexDirection: 'column',
-        margin: 15,
-    },
-    voteAverage: {
-        fontWeight: '100',
-        color: 'black'
-    }
 });
 
 ShowList.propTypes = {

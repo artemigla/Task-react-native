@@ -19,7 +19,7 @@ const MainPage = () => {
             try {
                 setLoading(true);
                 const res = await axios.get(Api);
-                setPosts(res.data.results);
+                setPosts(res.data);
                 setLoading(false);
             } catch (error) {
                 console.error(error);
